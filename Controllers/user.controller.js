@@ -23,18 +23,6 @@ const Login = async (req, res) => {
   }
 };
 
-const addUserUrl = async (req, res) => {
-  const { userId, urlId } = req.body;
-  try {
-    const user = await userModel.findById(userId).populate("history");
-    user.history.push(urlId);
-    await user.save();
-    res.send(user);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const getUser = (req, res) => {
   const authHeader = req.headers;
   const token = authHeader["authorization"];
@@ -43,21 +31,20 @@ const getUser = (req, res) => {
     if (err) return res.send("token expired");
     const account = await userModel
       .findOne({ _id: user.id }, { password: 0 })
-      .populate("history");
     res.send(account);
   });
 };
 
-const getUsers = async (req, res) => {
-  const users = await userModel.find({}, { password: 0 });
-  res.send(users);
-};
+// const getUsers = async (_req, res) => {
+//   const users = await userModel.find({}, { password: 0 });
+//   res.send(users);
+// };
 
 const SignUp = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { name, password, worthy} = req.body;
     const hash = await bcrypt.hash(password, 10);
-    const user = new userModel({ name, password: hash });
+    const user = new userModel({ name, password: hash, worthy });
     const exists = await userModel.findOne({ name });
     if (!exists) {
       const result = await user.save();
@@ -73,4 +60,4 @@ const SignUp = async (req, res) => {
   }
 };
 
-module.exports = { addUserUrl, Login, SignUp, getUser, getUsers };
+module.exports = { getUser, Login, SignUp };
