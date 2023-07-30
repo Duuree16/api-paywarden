@@ -3,7 +3,7 @@ const {
   Login,
   SignUp,
   getUser,
-} = require("../Controllers/user.controller").default;
+} = require("../Controllers/user.controller.js");
 // const { roleMiddleware } = require("../middlewares/roleMiddleware");
 
 const userRouter = experss.Router();
