@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const Login = async (req, res) => {
   const user = req.body;
   const result = await userModel.findOne({ name: user.name });
+  console.log(user.name)
   try {
     if (result) {
       const isEqual = await bcrypt.compare(user.password, result.password);

@@ -13,7 +13,7 @@ connect()
 
 
 
-app.use(cors)
+app.use(cors())
 app.use(bodyParser.json());
 app.use(hospitalPaymentRouter);
 app.use(userRouter)
